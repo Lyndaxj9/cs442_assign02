@@ -1,6 +1,8 @@
+# Generated Java files
 *.class
 
 # Vim Files
 *.swp
 
+# Folder containing files after build
 registrationScheduler/BUILD/*
