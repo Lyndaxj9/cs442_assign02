@@ -7,7 +7,7 @@ public class Driver{
 
     public static void main(String[] args) {
         System.out.println("CS442 Assignment02");
-        // Create FileProcessor and Results first
+
         FileProcessor fileProcessor = new FileProcessor();
         Results storeResults = new Results();
 
