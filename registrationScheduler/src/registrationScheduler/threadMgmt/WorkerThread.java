@@ -3,6 +3,8 @@ package registrationScheduler.threadMgmt;
 
 public class WorkerThread implements Runnable  {
 
+    // Should we have members here to take in the parameter in
+    // createWorkers
 
     public void run() {
 	// ...

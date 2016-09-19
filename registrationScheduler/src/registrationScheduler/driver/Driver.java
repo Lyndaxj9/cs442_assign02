@@ -9,11 +9,13 @@ public class Driver{
         // Create FileProcessor and Results first
         Results storeResults = new Results();
 
+        //Logger doesn't seem to be setting the debuglevel
         Logger log = new Logger();
-        // Testing for gitignore
-        System.out.println("ignore meplease");
+        log.setDebugValue(3);
 
-        CreateWorkers workerGenerate = new CreateWorkers();
+        System.out.println(log);
+
+        CreateWorkers workerGenerate = new CreateWorkers(storeResults, log);
         // Create ObjectPool here
 
     }
