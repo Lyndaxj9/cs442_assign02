@@ -10,6 +10,8 @@ public class Driver{
         Results storeResults = new Results();
 
         Logger log = new Logger();
+        // Testing for gitignore
+        System.out.println("ignore me");
 
         CreateWorkers workerGenerate = new CreateWorkers();
         // Create ObjectPool here
