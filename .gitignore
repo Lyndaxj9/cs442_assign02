@@ -3,6 +3,8 @@
 
 # Vim Files
 *.swp
+registrationScheduler/src/registrationScheduler/driver/*.swp
+registrationScheduler/src/registrationScheduler/*/*.swp
 
 # Folder containing files after build
 registrationScheduler/BUILD/*
