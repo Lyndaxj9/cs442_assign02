@@ -4,8 +4,7 @@ package registrationScheduler.util;
 public class Logger{
 
 
-    //Do we need to write a constructor for Logger in the enum?
-    public static enum DebugLevel { CONSTRUCTOR 
+    public static enum DebugLevel { NONE, STORE_CONTENTS, ADD_ENTRY, THREAD_RUN, CONSTRUCTOR 
                                    };
 
     private static DebugLevel debugLevel;
@@ -13,6 +12,7 @@ public class Logger{
 
     public static void setDebugValue (int levelIn) {
 	switch (levelIn) {
+      case 3: debugLevel = DebugLevel.THREAD_RUN; break;
 	  case 4: debugLevel = DebugLevel.CONSTRUCTOR; break;
 	}
     }
