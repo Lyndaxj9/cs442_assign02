@@ -11,21 +11,25 @@ public class FileProcessor {
 	private FileReader filereader;
 	private BufferedReader bufferedReader;
 	private String lines[] = new String [80];
+    private static Logger log;
 	
 	//Constructor
-	public FileProcessor(){
+	public FileProcessor(Logger i_log){
+        this.log = i_log;
 		
 		try{
 			file = new File("input.txt");
 			filereader = new FileReader(file);
 			bufferedReader = new BufferedReader (filereader);
 			storeLines();
+
+            log.writeMessage("CONSTRUCTOR: FileProcessor() called.", Logger.DebugLevel.CONSTRUCTOR);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		
 		}
-		
+	    	
 	
 	}
 

@@ -3,6 +3,11 @@ package registrationScheduler.util;
 
 public class Logger{
 
+    private static Logger log = new Logger();
+
+    public static Logger getInstance(){
+        return log;
+    }
 
     public static enum DebugLevel { NONE, STORE_CONTENTS, ADD_ENTRY, THREAD_RUN, CONSTRUCTOR 
                                    };
@@ -12,6 +17,9 @@ public class Logger{
 
     public static void setDebugValue (int levelIn) {
 	switch (levelIn) {
+      case 0: debugLevel = DebugLevel.NONE; break;
+      case 1: debugLevel = DebugLevel.STORE_CONTENTS; break;
+      case 2: debugLevel = DebugLevel.ADD_ENTRY; break;
       case 3: debugLevel = DebugLevel.THREAD_RUN; break;
 	  case 4: debugLevel = DebugLevel.CONSTRUCTOR; break;
 	}

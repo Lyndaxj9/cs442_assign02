@@ -16,13 +16,13 @@ public class CreateWorkers  {
         this.filePro = i_filePro;
         this.results = i_results;
         this.log = i_log;
-//        log.writeMessage("createdWorkers", log.debuglevel.CONSTRUCTOR);
+        log.writeMessage("CONSTRUCTOR: CreateWorkers() called.", Logger.DebugLevel.CONSTRUCTOR);
     }
 
     // this class has the method startWokers(...)
     public void startWorkers(int numThreads) {
         for (int i = 0; i<numThreads; i++) {
-            Thread thread = new Thread(new WorkerThread(filePro, results));
+            Thread thread = new Thread(new WorkerThread(filePro, results, log));
             thread.start();
         } 
     }
