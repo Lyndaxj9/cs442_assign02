@@ -3,6 +3,7 @@ package registrationScheduler.threadMgmt;
 import registrationScheduler.util.Logger;
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.store.StdoutDisplayInterface;
+import registrationScheduler.store.Student;
 
 public class WorkerThread implements Runnable  {
 
@@ -10,6 +11,7 @@ public class WorkerThread implements Runnable  {
     FileProcessor filePro;
     StdoutDisplayInterface results;
     private static Logger log;
+    Student[] student = new Student[80];
     // Students
     // Results
     //
@@ -24,6 +26,19 @@ public class WorkerThread implements Runnable  {
 
     public void run() {
         log.writeMessage("METHOD: run() called.", Logger.DebugLevel.THREAD_RUN);
+
+        int[] prefs = {4,2,3,1,5,6,7};
+        for (int i = 0; i<80; i++) {
+            student[i].setPreference(prefs);
+        }
+        /*
+        student.setPreference(prefs);
+        */
+        System.out.println(student[1].getLowestPref());
+        /*
+        for (int j = 0; j<80; j++) {
+            System.out.println(student[j].getLowestPref());
+        }*/
 	// ...
     // Read lines from file using fileProcessor
     // Create all course objects in ObjectPool
@@ -39,6 +54,7 @@ public class WorkerThread implements Runnable  {
 
     // - ALGO METHODS
     //get
+    
 
     
 
