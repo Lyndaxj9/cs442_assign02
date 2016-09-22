@@ -7,7 +7,6 @@ import registrationScheduler.store.Student;
 
 public class WorkerThread implements Runnable  {
 
-    //have data members for
     FileProcessor filePro;
     StdoutDisplayInterface results;
     private static Logger log;
@@ -26,6 +25,28 @@ public class WorkerThread implements Runnable  {
 
     public void run() {
         log.writeMessage("METHOD: run() called.", Logger.DebugLevel.THREAD_RUN);
+        //
+	//FileProcessor fileprocessor = new FileProcessor();
+	/*	int countLines = 0;
+		String line;
+		String delim = "\\s+";
+		Student studentArray[] = new Student[80];
+		String [] parsedString = new String [8];
+		int [] prefArray = new int [7];
+		Student aStudent;
+
+		while( (line = filePro.getLine(countLines)) != null){
+			parsedString = line.split(delim);
+			aStudent = new Student();
+			aStudent.setName(parsedString[0]);
+			for(int i = 1;i<8;i++){
+				prefArray[i-1] = Integer.parseInt(parsedString[i]);
+			}
+			aStudent.setPreference(prefArray);
+			studentArray[countLines] = aStudent;
+			countLines++;
+		}
+        */
 
         int[] prefs = {4,2,3,1,5,6,7};
         for (int i = 0; i<80; i++) {
@@ -39,6 +60,7 @@ public class WorkerThread implements Runnable  {
         for (int j = 0; j<80; j++) {
             System.out.println(student[j].getLowestPref());
         }*/
+        //
 	// ...
     // Read lines from file using fileProcessor
     // Create all course objects in ObjectPool
