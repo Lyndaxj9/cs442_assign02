@@ -6,7 +6,11 @@ import registrationScheduler.store.StdoutDisplayInterface;
 
 public class WorkerThread implements Runnable  {
 
+<<<<<<< HEAD
     //have data members forc
+=======
+    //have data members for
+>>>>>>> d79629e53d864c62b737cb4790992faed233ddab
     FileProcessor filePro;
     StdoutDisplayInterface results;
     private static Logger log;
@@ -24,6 +28,7 @@ public class WorkerThread implements Runnable  {
 
     public void run() {
         log.writeMessage("METHOD: run() called.", Logger.DebugLevel.THREAD_RUN);
+<<<<<<< HEAD
 	//FileProcessor fileprocessor = new FileProcessor();
 		int countLines = 0;
 		String line;
@@ -44,6 +49,8 @@ public class WorkerThread implements Runnable  {
 			studentArray[countLines] = aStudent;
 			countLines++;
 		}
+=======
+>>>>>>> d79629e53d864c62b737cb4790992faed233ddab
 	// ...
     // Read lines from file using fileProcessor
     // Create all course objects in ObjectPool

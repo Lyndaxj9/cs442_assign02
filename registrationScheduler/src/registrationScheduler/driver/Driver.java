@@ -1,3 +1,4 @@
+import registrationScheduler.util.FileProcessor;
 import registrationScheduler.threadMgmt.CreateWorkers;
 import registrationScheduler.store.Results;
 import registrationScheduler.util.Logger;
@@ -5,17 +6,17 @@ import registrationScheduler.util.Logger;
 public class Driver{
 
     public static void main(String[] args) {
-        System.out.println("CS442 Assignment02");
-        // Create FileProcessor and Results first
-        Results storeResults = new Results();
 
-        //Logger doesn't seem to be setting the debuglevel
-        Logger log = new Logger();
-        log.setDebugValue(3);
+        Logger log = Logger.getInstance();
+        log.setDebugValue(4);
 
-        System.out.println(log);
+        FileProcessor fileProcessor = new FileProcessor(log);
+        Results storeResults = new Results(log);
 
-        CreateWorkers workerGenerate = new CreateWorkers(storeResults, log);
+        CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, log);
+
+        workerGenerate.startWorkers(2);
+
         // Create ObjectPool here
 
     }
