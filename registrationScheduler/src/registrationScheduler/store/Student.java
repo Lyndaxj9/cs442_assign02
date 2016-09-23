@@ -20,6 +20,19 @@ public class Student {
 		return preference;
 	}
 
+    public synchronized int getLowestPref() {
+        int minValue = 10;
+        int minLocation = -1;
+        for (int i = 0; i<7;i++) {
+            if(minValue > this.preference[i]) {
+                minValue = this.preference[i];
+                minLocation = i;
+            }
+        }
+
+        return minLocation;
+    }
+
 	public void setPreference(int[] preferenceIn) {
 		for(int i = 0;i < 7;i++)
 			this.preference[i] = preferenceIn[i];

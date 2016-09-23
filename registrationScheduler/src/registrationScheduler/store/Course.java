@@ -1,3 +1,4 @@
+package registrationScheduler.store;
 
 public class Course {
 	

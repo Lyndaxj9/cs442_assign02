@@ -17,6 +17,7 @@ public class FileProcessor {
 	public FileProcessor(Logger i_log){
         this.log = i_log;
 		
+        /*
 		try{
 			file = new File("input.txt");
 			filereader = new FileReader(file);
@@ -28,7 +29,7 @@ public class FileProcessor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		
-		}
+		}*/
 	    	
 	
 	}

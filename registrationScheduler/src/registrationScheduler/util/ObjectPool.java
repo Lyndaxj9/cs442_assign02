@@ -1,8 +1,10 @@
 package registrationScheduler.util;
 
-public class ObjectPool {
-    int capacity;
+public interface ObjectPool{
 
+    public static void getObjectPool() {}
+
+    public static void createObjects(){}
     //Have methods to:
     //validate
     //borrow

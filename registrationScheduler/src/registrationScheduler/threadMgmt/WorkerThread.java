@@ -1,6 +1,7 @@
 package registrationScheduler.threadMgmt;
 
 import registrationScheduler.util.Logger;
+import registrationScheduler.util.CourseObjectPool;
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.store.StdoutDisplayInterface;
 import registrationScheduler.store.Student;
@@ -10,15 +11,19 @@ public class WorkerThread implements Runnable  {
     FileProcessor filePro;
     StdoutDisplayInterface results;
     private static Logger log;
-    Student[] student = new Student[80];
+    private static CourseObjectPool objpool;
+    Student[] students;
+    int counter;
     // Students
     // Results
     //
 
     // createWorkers
-    public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, Logger i_log){
+    public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, Student[] i_student, CourseObjectPool i_pool, Logger i_log){
         this.filePro = i_filePro;
+        this.students = i_student;
         this.results = i_results;
+        this.objpool = i_pool;
         this.log = i_log;
         log.writeMessage("CONSTRUCTOR: WorkerThread() called.", Logger.DebugLevel.CONSTRUCTOR);
     }
@@ -50,16 +55,15 @@ public class WorkerThread implements Runnable  {
 
         int[] prefs = {4,2,3,1,5,6,7};
         for (int i = 0; i<80; i++) {
-            student[i].setPreference(prefs);
+            students[i] = new Student();
+            students[i].setPreference(prefs);
         }
-        /*
-        student.setPreference(prefs);
-        */
-        System.out.println(student[1].getLowestPref());
-        /*
-        for (int j = 0; j<80; j++) {
-            System.out.println(student[j].getLowestPref());
-        }*/
+         
+        for (counter = 0; counter<80; counter++) {
+            System.out.printf("Student %d\n", counter);
+            System.out.println(students[counter].getLowestPref());
+        }
+        
         //
 	// ...
     // Read lines from file using fileProcessor
@@ -75,7 +79,6 @@ public class WorkerThread implements Runnable  {
     //read from file and store preferences in student
 
     // - ALGO METHODS
-    //get
     
 
     
