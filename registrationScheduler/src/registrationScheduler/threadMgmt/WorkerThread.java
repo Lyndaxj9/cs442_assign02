@@ -17,12 +17,16 @@ public class WorkerThread implements Runnable  {
     private static StudentObjectPool studentpool;
     Student[] students;
     int counter;
-    // Students
-    // Results
-    //
+    String [] parsedString = new String [8];
+    int [] prefArray = new int [7];
+    String delim = "\\s+";
+    Student aStudent;
+    String line;
+	
 
     // createWorkers
     public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, StudentObjectPool s_pool, CourseObjectPool c_pool, Logger i_log){
+    //public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, Student[] i_student, CourseObjectPool i_pool, Logger i_log){
         this.filePro = i_filePro;
         this.studentpool = s_pool;
         this.results = i_results;
@@ -33,17 +37,26 @@ public class WorkerThread implements Runnable  {
 
     public void run() {
         log.writeMessage("METHOD: run() called.", Logger.DebugLevel.THREAD_RUN);
-        //
-	//FileProcessor fileprocessor = new FileProcessor();
-	/*	int countLines = 0;
-		String line;
-		String delim = "\\s+";
-		Student studentArray[] = new Student[80];
-		String [] parsedString = new String [8];
-		int [] prefArray = new int [7];
-		Student aStudent;
+	storeStudentInfo();
+     
+        
+    // Create all course objects in ObjectPool
+    // Run the algorithm 
+    // method{Get student and get top priority class}
+    // method{Check if top class has available seats and if so assign the seat, using ObjectPool}
+    // method{Store results at everystep or at the end into Results class
+    }
+	public synchronized void storeStudentInfo(){
+				while( (getLine())!= null){
+				}
+	}
 
-		while( (line = filePro.getLine(countLines)) != null){
+	public synchronized String getLine(){
+
+		line = filePro.getNextLine();
+		int lineCount = filePro.getLineCount();
+
+		if(line != null){
 			parsedString = line.split(delim);
 			aStudent = new Student();
 			aStudent.setName(parsedString[0]);
@@ -51,10 +64,12 @@ public class WorkerThread implements Runnable  {
 				prefArray[i-1] = Integer.parseInt(parsedString[i]);
 			}
 			aStudent.setPreference(prefArray);
-			studentArray[countLines] = aStudent;
-			countLines++;
+			students[lineCount] = aStudent;
+			Thread currentThread = Thread.currentThread();			
+		
 		}
-        */
+	
+		return line;
 
         Thread currentThread = Thread.currentThread();
 
@@ -164,7 +179,6 @@ public class WorkerThread implements Runnable  {
     //read from file and store preferences in student
 
     // - ALGO METHODS
-
 
 
 

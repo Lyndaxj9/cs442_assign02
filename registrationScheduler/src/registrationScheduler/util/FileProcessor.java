@@ -10,14 +10,15 @@ public class FileProcessor {
 	private File file;
 	private FileReader filereader;
 	private BufferedReader bufferedReader;
-	private String lines[] = new String [80];
+	private String lines[] = new String [100];
+	private int lineCount = -1;
     private static Logger log;
 	
 	//Constructor
 	public FileProcessor(Logger i_log){
         this.log = i_log;
 		
-        /*
+
 		try{
 			file = new File("input.txt");
 			filereader = new FileReader(file);
@@ -29,12 +30,17 @@ public class FileProcessor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		
-		}*/
+		}
 	    	
 	
 	}
+	
+	public synchronized int getLineCount(){
+		return this.lineCount;
 
-	public void storeLines() throws IOException {
+	}
+
+	public synchronized void storeLines() throws IOException {
 		int numLines = 0;
 		
 		try {
@@ -50,8 +56,9 @@ public class FileProcessor {
 
 	}
 	
-	public String getLine(int i){
-		return lines[i];
+	public synchronized String getNextLine(){
+		this.lineCount++;
+		return lines[lineCount];	
 	}
 			
 }	

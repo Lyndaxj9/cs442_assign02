@@ -21,7 +21,7 @@ public class Driver{
 
         CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, studentPool, coursePool, log);
 
-        workerGenerate.startWorkers(2);
+        workerGenerate.startWorkers(3);
 
         // Create ObjectPool here
 
