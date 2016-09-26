@@ -30,6 +30,7 @@ public class Student {
             }
         }
 
+        preference[minLocation] = 10;
         return minLocation;
     }
 

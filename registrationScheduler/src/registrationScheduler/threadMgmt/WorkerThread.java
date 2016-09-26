@@ -38,14 +38,26 @@ public class WorkerThread implements Runnable  {
     public void run() {
         log.writeMessage("METHOD: run() called.", Logger.DebugLevel.THREAD_RUN);
 	storeStudentInfo();
+    
+        storeStudentInfo();
+        studentpool.returnAllObjects();
+        assignClasses(coursepool, studentpool, results);
      
+        /*
+        while(studentpool.getCurrentObjectNum() < 80) {
+            aStudent = studentpool.loopObjects();
+            int stunum = studentpool.getCurrentObjectNum();
+            System.out.printf("Student_%d ", stunum);
+            int[] prf = aStudent.getPreference();
+            for(int i = 0; i<7; i++) {
+                System.out.printf("%d ", prf[i]);
+            }
+            System.out.printf("\n");
+        }
+        */
         
-    // Create all course objects in ObjectPool
-    // Run the algorithm 
-    // method{Get student and get top priority class}
-    // method{Check if top class has available seats and if so assign the seat, using ObjectPool}
-    // method{Store results at everystep or at the end into Results class
     }
+
 	public synchronized void storeStudentInfo(){
 				while( (getLine())!= null){
 				}
@@ -58,19 +70,24 @@ public class WorkerThread implements Runnable  {
 
 		if(line != null){
 			parsedString = line.split(delim);
-			aStudent = new Student();
-			aStudent.setName(parsedString[0]);
-			for(int i = 1;i<8;i++){
-				prefArray[i-1] = Integer.parseInt(parsedString[i]);
-			}
-			aStudent.setPreference(prefArray);
-			students[lineCount] = aStudent;
-			Thread currentThread = Thread.currentThread();			
+			aStudent = studentpool.borrowObject(lineCount);
+            if(aStudent != null) {
+                aStudent.setName(parsedString[0]);
+                for(int i = 1;i<8;i++){
+                    prefArray[i-1] = Integer.parseInt(parsedString[i]);
+                }
+                aStudent.setPreference(prefArray);
+                //students[lineCount] = aStudent;
+                Thread currentThread = Thread.currentThread();			
+            }
 		
 		}
 	
 		return line;
 
+    }
+
+/*
         Thread currentThread = Thread.currentThread();
 
         int[] prefs = {4,2,3,1,5,6,7};
@@ -88,6 +105,7 @@ public class WorkerThread implements Runnable  {
         studentpool.returnAllObjects();
 
         assignClasses(coursepool, studentpool, results);
+        */
          
         /*
         for (counter = 0; counter<80; counter++) {
@@ -101,7 +119,6 @@ public class WorkerThread implements Runnable  {
         }
         */
         
-    }
 
     
     public synchronized int lowestPref(StudentObjectPool s_pool, int n){
