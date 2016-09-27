@@ -7,6 +7,7 @@ public class CourseObjectPool{
 
     public static int capacity = 7;
     public static int maxClasses = 5;
+    public static int currentSchedule = 0;
     public static Course[] courses = new Course[capacity];
     public static int[] check = new int[capacity];
 
@@ -31,6 +32,14 @@ public class CourseObjectPool{
 
     public static synchronized void returnObject(int item) {
         check[item] = 0;
+    }
+
+    public static int getCurrentSchedule(){
+        return currentSchedule;
+    }
+
+    public static void incrementCurrentSchedule(){
+        currentSchedule++;
     }
 
     //Have methods to:

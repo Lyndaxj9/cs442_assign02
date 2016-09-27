@@ -10,6 +10,9 @@ public class Driver{
 
     public static void main(String[] args) {
 
+        // TODO : get command line inputs
+        // How to handle exceptions
+
         Logger log = Logger.getInstance();
         log.setDebugValue(3);
         CourseObjectPool coursePool = CourseObjectPool.getObjectPool();

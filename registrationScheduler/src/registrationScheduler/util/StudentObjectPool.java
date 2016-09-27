@@ -34,9 +34,10 @@ public class StudentObjectPool{
         for (int i = 0; i<capacity; i++) {
             check[i] = 0;
         } 
+        currentStudent = 0;
     }
 
-    public static int getCurrentObjectNum(){
+    public synchronized static int getCurrentObjectNum(){
         return currentStudent;
     }
 
@@ -48,6 +49,7 @@ public class StudentObjectPool{
             check[currentStudent] = 1;
             int retStu = currentStudent;
             currentStudent++;
+            students[retStu].setStudentid(retStu);
             return students[retStu]; 
         } 
         
