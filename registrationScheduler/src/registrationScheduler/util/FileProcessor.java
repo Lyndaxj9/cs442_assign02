@@ -20,7 +20,7 @@ public class FileProcessor {
 		
 
 		try{
-			file = new File("input.txt");
+			file = new File("data.txt");
 			filereader = new FileReader(file);
 			bufferedReader = new BufferedReader (filereader);
 			storeLines();

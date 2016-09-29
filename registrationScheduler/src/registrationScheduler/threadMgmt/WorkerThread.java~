@@ -15,6 +15,7 @@ public class WorkerThread implements Runnable  {
     private static Logger log;
     private static CourseObjectPool coursepool;
     private static StudentObjectPool studentpool;
+    Student[] students;
     int counter;
     String [] parsedString = new String [8];
     int [] prefArray = new int [7];
@@ -35,26 +36,12 @@ public class WorkerThread implements Runnable  {
     }
 
     public void run() {
-
-        try{
-            log.writeMessage("METHOD: run() called.", Logger.DebugLevel.THREAD_RUN);
+        log.writeMessage("METHOD: run() called.", Logger.DebugLevel.THREAD_RUN);
+	storeStudentInfo();
+    
         storeStudentInfo();
-        
-            storeStudentInfo();
-            studentpool.returnAllObjects();
-            assignClasses(coursepool, studentpool, results);
-            Thread.sleep(1000);
-            /*
-            aStudent = studentpool.borrowObject(59);
-            if(aStudent!=null){
-                aStudent.printSchedule();
-            }
-            */
-            printStudentsSchedules();
-
-        } catch(InterruptedException e) {
-// ...
-        }
+        studentpool.returnAllObjects();
+        assignClasses(coursepool, studentpool, results);
      
         /*
         while(studentpool.getCurrentObjectNum() < 80) {
@@ -146,6 +133,7 @@ public class WorkerThread implements Runnable  {
         Course selectedCourse = c_pool.borrowObject(c);
         boolean updated = false;
         if (selectedCourse != null && selectedCourse.getTotalStudents() < selectedCourse.getCapacity()) {
+            System.out.println("Tobetrue");
             selectedCourse.incrementStudentCount();
             c_pool.returnObject(c);
             updated = true;
@@ -153,54 +141,94 @@ public class WorkerThread implements Runnable  {
         return updated;
     }
 
-    public void assignClasses(CourseObjectPool c_pool, StudentObjectPool s_pool, StdoutDisplayInterface r_store) {
-//        for(int i=0; i<5; i++){
-        counter = 0;
-        for(; c_pool.getCurrentSchedule() < c_pool.maxClasses; c_pool.incrementCurrentSchedule()) {
-            int i = c_pool.getCurrentSchedule();
-            System.out.printf("LOOP ITER #%d\n", i);
+    public synchronized void assignClasses(CourseObjectPool c_pool, StudentObjectPool s_pool, StdoutDisplayInterface r_store) {
+        for(int i=0; i<5; i++){
             while(s_pool.getCurrentObjectNum() < s_pool.capacity) {
                 Student currentStudent = s_pool.loopObjects(); 
-//                int currentStuNum = s_pool.getCurrentObjectNum();
-                int currentStuNum = currentStudent.getStudentid();
-                
-                if(currentStudent != null) {
-                    int studentCourse = currentStudent.getLowestPref();
-                    while(studentCourse != -1 && !updateCourse(c_pool, studentCourse)) {
-                        studentCourse = currentStudent.getLowestPref();
-                    }
-
-                    if(studentCourse != -1) {
-                        if(currentStuNum == 59) {
-                            System.out.printf("Class: %d\n", studentCourse);
-                        }
-                        currentStudent.scheduleCourse(studentCourse+1);
-                    }
-                    
-                   Thread currT = Thread.currentThread();
-                   System.out.printf("Student %d, Low %d, Thread %d\n", currentStuNum, studentCourse, currT.getId());
-
+                int currentStuNum = s_pool.getCurrentObjectNum();
+                int studentCourse = currentStudent.getLowestPref();
+                while(!updateCourse(c_pool, studentCourse)) {
+                    studentCourse = currentStudent.getLowestPref();
                 }
+
+                currentStudent.scheduleCourse(i, )
+                
+//               updateSchedule(results, currentStuNum, studentCourse, i);
+                
+
+               
+               Thread currT = Thread.currentThread();
+               System.out.printf("Student %d, Low %d, Thread %d\n", currentStuNum, studentCourse, currT.getId());
             }
-            
-            s_pool.returnAllObjects();
 
         }
     }
 
+
+    public char getCourseName(int courseID) {
+         switch(courseID) {
+             case 1:
+                 return 'A';
+                 break;
+             case 2:
+                 return 'B';
+                 break;
+             case 3:
+                 return 'C';
+                 break;
+             case 4:
+                 return 'D';
+                 break;
+             case 5:
+                 return 'E';
+                 break;
+             case 6:
+                 return 'F';
+                 break;
+             case 7:
+                 return 'G';
+                 break;
+        }
+
+    }
+
     
 
-    public synchronized void printStudentsSchedules() {
-        while(studentpool.getCurrentObjectNum() < studentpool.capacity) {
-            aStudent = studentpool.loopObjects();
-            int studentnum = studentpool.getCurrentObjectNum();
-            if(aStudent != null) {
-                System.out.printf("Student %d  ", studentnum);
-                aStudent.printSchedule();
-            }
-        
+    /*
+    public void updateSchedule(StdoutDisplayInterface r_store, int studentID, int courseNum, int currentIter) {
+         switch(courseNum) {
+             case 1:
+                 (Results)r_store.schedule[studentID][currentIter] = 'A';
+                 break;
+             case 2:
+                 r_store.schedule[studentID][currentIter] = 'B';
+                 break;
+             case 3:
+                 r_store.schedule[studentID][currentIter] = 'C';
+                 break;
+             case 4:
+                 r_store.schedule[studentID][currentIter] = 'D';
+                 break;
+             case 5:
+                 r_store.schedule[studentID][currentIter] = 'E';
+                 break;
+             case 6:
+                 r_store.schedule[studentID][currentIter] = 'F';
+                 break;
+             case 7:
+                 r_store.schedule[studentID][currentIter] = 'G';
+                 break;
+             
         }
-  }
+
+    }*/
+
+    
+    // method{Store results at everystep or at the end into Results class
+    //read from file and store preferences in student
+
+    // - ALGO METHODS
+
 
 
 }
