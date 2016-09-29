@@ -1,10 +1,10 @@
 package registrationScheduler.util;
 
-public interface ObjectPool{
+public abstract class ObjectPool{
 
-    public static void getObjectPool() {}
+    abstract Object getObjectPool();
 
-    public static void createObjects(){}
+    abstract void createObjects();
 
     //Have methods to:
     //validate

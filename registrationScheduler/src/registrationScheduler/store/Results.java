@@ -20,10 +20,12 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 
     public void writeSchedulesToScreen() {
 	// ..
+        System.out.println("writeSchedulesToScreen()");
     }
 
     public void writeSchedulesToFile() {
         //...
+        System.out.println("writeSchedulesToFile()");
     }
 
     public void updateSchedule(int studentId, int courseNum, int currentLine) {

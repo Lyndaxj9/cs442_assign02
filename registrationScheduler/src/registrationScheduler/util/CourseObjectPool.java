@@ -2,12 +2,11 @@ package registrationScheduler.util;
 
 import registrationScheduler.store.Course;
 
-public class CourseObjectPool{
+public class CourseObjectPool extends ObjectPool {
     private static CourseObjectPool objPool = new CourseObjectPool();
 
     public static int capacity = 7;
-    public static int maxClasses = 5;
-    public static int currentSchedule = 0;
+    public static int currentCourse = 0;
     public static Course[] courses = new Course[capacity];
     public static int[] check = new int[capacity];
 
@@ -16,7 +15,7 @@ public class CourseObjectPool{
         return objPool;
     }
 
-    public static void createObjects(){
+    public void createObjects(){
         for (int i = 0; i<capacity; i++) {
             courses[i] = new Course();
         } 
@@ -34,17 +33,5 @@ public class CourseObjectPool{
         check[item] = 0;
     }
 
-    public static int getCurrentSchedule(){
-        return currentSchedule;
-    }
-
-    public static void incrementCurrentSchedule(){
-        currentSchedule++;
-    }
-
-    //Have methods to:
-    //validate
-    //borrow
-    //return
 
 }

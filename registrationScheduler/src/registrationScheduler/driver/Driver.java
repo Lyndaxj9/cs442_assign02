@@ -5,6 +5,7 @@ import registrationScheduler.store.Student;
 import registrationScheduler.util.Logger;
 import registrationScheduler.util.CourseObjectPool;
 import registrationScheduler.util.StudentObjectPool;
+import registrationScheduler.algo.Scheduler;
 
 public class Driver{
 
@@ -20,9 +21,10 @@ public class Driver{
 
         FileProcessor fileProcessor = new FileProcessor(log);
         Results storeResults = new Results(log);
+        Scheduler scheduler = new Scheduler();
         Student[] students = new Student[80];
 
-        CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, studentPool, coursePool, log);
+        CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, studentPool, coursePool, log, scheduler);
 
         workerGenerate.startWorkers(3);
 

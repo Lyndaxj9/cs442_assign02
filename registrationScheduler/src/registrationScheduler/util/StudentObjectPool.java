@@ -30,6 +30,9 @@ public class StudentObjectPool{
         return null;
     }
 
+    public static synchronized void returnObject(int item){
+        check[item] = 0;
+    }
     public static synchronized void returnAllObjects(){
         for (int i = 0; i<capacity; i++) {
             check[i] = 0;

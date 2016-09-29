@@ -5,16 +5,21 @@ import registrationScheduler.util.CourseObjectPool;
 import registrationScheduler.util.StudentObjectPool;
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.store.StdoutDisplayInterface;
+import registrationScheduler.store.FileDisplayInterface;
+import registrationScheduler.store.Results;
 import registrationScheduler.store.Student;
 import registrationScheduler.store.Course;
+import registrationScheduler.algo.Scheduler;
 
 public class WorkerThread implements Runnable  {
 
     FileProcessor filePro;
     StdoutDisplayInterface results;
+    //Results results;
     private static Logger log;
     private static CourseObjectPool coursepool;
     private static StudentObjectPool studentpool;
+    private Scheduler scheduler;
     int counter;
     String [] parsedString = new String [8];
     int [] prefArray = new int [7];
@@ -24,13 +29,14 @@ public class WorkerThread implements Runnable  {
 	
 
     // createWorkers
-    public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, StudentObjectPool s_pool, CourseObjectPool c_pool, Logger i_log){
+    public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, StudentObjectPool s_pool, CourseObjectPool c_pool, Logger i_log, Scheduler i_schedule){
     //public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, Student[] i_student, CourseObjectPool i_pool, Logger i_log){
         this.filePro = i_filePro;
         this.studentpool = s_pool;
         this.results = i_results;
         this.coursepool = c_pool;
         this.log = i_log;
+        this.scheduler = i_schedule;
         log.writeMessage("CONSTRUCTOR: WorkerThread() called.", Logger.DebugLevel.CONSTRUCTOR);
     }
 
@@ -42,15 +48,13 @@ public class WorkerThread implements Runnable  {
         
             storeStudentInfo();
             studentpool.returnAllObjects();
-            assignClasses(coursepool, studentpool, results);
+            //assignClasses(coursepool, studentpool, results);
             Thread.sleep(1000);
-            /*
-            aStudent = studentpool.borrowObject(59);
+            aStudent = studentpool.borrowObject(79);
             if(aStudent!=null){
                 aStudent.printSchedule();
             }
-            */
-            printStudentsSchedules();
+            //printStudentsSchedules();
 
         } catch(InterruptedException e) {
 // ...
@@ -90,6 +94,8 @@ public class WorkerThread implements Runnable  {
                     prefArray[i-1] = Integer.parseInt(parsedString[i]);
                 }
                 aStudent.setPreference(prefArray);
+                scheduler.assignFive(aStudent, coursepool);
+                studentpool.returnObject(lineCount);
                 //students[lineCount] = aStudent;
                 Thread currentThread = Thread.currentThread();			
             }
@@ -134,25 +140,8 @@ public class WorkerThread implements Runnable  {
         
 
     
-    public synchronized int lowestPref(StudentObjectPool s_pool, int n){
-        Student currentStudent = s_pool.borrowObject(n);    
-        if(currentStudent != null) {
-            return currentStudent.getLowestPref();
-        }
-        return -1;
-    }
 
-    public synchronized boolean updateCourse(CourseObjectPool c_pool, int c) {
-        Course selectedCourse = c_pool.borrowObject(c);
-        boolean updated = false;
-        if (selectedCourse != null && selectedCourse.getTotalStudents() < selectedCourse.getCapacity()) {
-            selectedCourse.incrementStudentCount();
-            c_pool.returnObject(c);
-            updated = true;
-        }
-        return updated;
-    }
-
+    /*
     public void assignClasses(CourseObjectPool c_pool, StudentObjectPool s_pool, StdoutDisplayInterface r_store) {
 //        for(int i=0; i<5; i++){
         counter = 0;
@@ -187,7 +176,7 @@ public class WorkerThread implements Runnable  {
 
         }
     }
-
+*/
     
 
     public synchronized void printStudentsSchedules() {
