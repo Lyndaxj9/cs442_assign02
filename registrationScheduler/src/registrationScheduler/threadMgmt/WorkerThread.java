@@ -12,7 +12,6 @@ import registrationScheduler.store.Student;
 import registrationScheduler.store.Course;
 import registrationScheduler.store.Results;
 import registrationScheduler.algo.Scheduler;
-import registrationScheduler.store.Results;
 
 public class WorkerThread implements Runnable  {
 
@@ -53,6 +52,8 @@ public class WorkerThread implements Runnable  {
             if(aStudent!=null){
                 aStudent.printSchedule();
             }
+            ((Results)results).addToDataStruct(scheduler.getAvgPref());
+            System.out.printf("The average preference is: %f\n", scheduler.getAvgPref());
             //printStudentsSchedules();
 
         } catch(InterruptedException e) {
@@ -88,10 +89,8 @@ public class WorkerThread implements Runnable  {
                 }
                 aStudent.setPreference(prefArray);
                 scheduler.assignFive(aStudent, coursepool);
-                ((StudentObjectPool)studentpool).returnObject(lineCount);
 		((Results)results).addToDataStruct(aStudent);
-		
-                //students[lineCount] = aStudent;
+                ((StudentObjectPool)studentpool).returnObject(lineCount);
                 Thread currentThread = Thread.currentThread();			
             }
 		

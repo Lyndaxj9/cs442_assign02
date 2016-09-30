@@ -13,7 +13,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
     private static Logger log;
     private int maxClasses = 5;
     private int totalStudents = 80;
-    public String[][] schedule = new String[totalStudents][2];
+    public String[][] schedule = new String[totalStudents+1][2];
     private String scheduleClass;
 	private int dataStructIndex = -1;
 	
@@ -23,9 +23,6 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
         this.log = i_log;
         log.writeMessage("CONSTRUCTOR: Results() called.", Logger.DebugLevel.CONSTRUCTOR);
     }
-
-
-
 
 
     // appropriate method to save prime number to the data structure
@@ -55,23 +52,23 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
         System.out.println("writeSchedulesToScreen()");
     }
 
- public synchronized void addToDataStruct(Student student){
-	scheduleClass = "";
-	dataStructIndex++;
-	//System.out.println("This is the Student's name" + student.getName());
-	schedule[dataStructIndex][0] = student.getName();
-	
-	for(int j = 0;j<5;j++){
-		scheduleClass = scheduleClass + " " + student.getCschedule()[j];
+    public synchronized void addToDataStruct(Student student){
+        scheduleClass = "";
+        dataStructIndex++;
+        //System.out.println("This is the Student's name" + student.getName());
+        schedule[dataStructIndex][0] = student.getName();
 
-	}
-	schedule[dataStructIndex][1] = scheduleClass;
-	//System.out.println( schedule[dataStructIndex][0] + schedule[dataStructIndex][1] );
+        for(int j = 0;j<5;j++){
+            scheduleClass = scheduleClass + " " + student.getCschedule()[j];
 
-   }
+        }
+        schedule[dataStructIndex][1] = scheduleClass;
+        //System.out.println( schedule[dataStructIndex][0] + schedule[dataStructIndex][1] );
 
+    }
 
+    public synchronized void addToDataStruct(Double avg) {
+        schedule[totalStudents][0] = Double.toString(avg);
+    }
 
 } 
-
-

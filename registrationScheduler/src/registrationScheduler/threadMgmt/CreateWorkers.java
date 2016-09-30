@@ -19,6 +19,10 @@ public class CreateWorkers  {
     StdoutDisplayInterface results;
     private static Logger log; 
 
+    /*
+     * Constructor
+     * Takes in all the objects needed for the threads to assign classes
+     */
     public CreateWorkers(FileProcessor i_filePro, StdoutDisplayInterface i_results, StudentObjectPool s_pool, CourseObjectPool c_pool, Logger i_log, Scheduler i_schedule) {
         this.filePro = i_filePro;
         this.studentpool = s_pool;
@@ -29,12 +33,23 @@ public class CreateWorkers  {
         log.writeMessage("CONSTRUCTOR: CreateWorkers() called.", Logger.DebugLevel.CONSTRUCTOR);
     }
 
+    /*
+     * Creates the threads and waits for them to die to then join them
+     */
     public void startWorkers(int numThreads) {
+        Thread[] threads = new Thread[numThreads];
         for (int i = 0; i<numThreads; i++) {
-            Thread thread = new Thread(new WorkerThread(filePro, results, studentpool, coursepool, log, scheduler));
-            thread.start();
+            threads[i] = new Thread(new WorkerThread(filePro, results, studentpool, coursepool, log, scheduler));
+            threads[i].start();
         } 
         //Are the threads also joined here I guess so?
+        try{
+            for(int i = 0; i<numThreads; i++) {
+                threads[i].join();
+            }
+        } catch(InterruptedException e){
+            //how to handle this exception?
+        }
     }
 
 }

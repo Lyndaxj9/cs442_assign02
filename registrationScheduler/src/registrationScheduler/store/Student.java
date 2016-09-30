@@ -17,12 +17,14 @@ public class Student {
 	//Position of student in StudentObjectPool
 	private int studentId;
 
-	private int amntClasses = 0;
-	
+    private int amntClasses = 0;
 
+    private double totalPreference = 0;
 	
-	
-	/**
+	//Validates whether a student can have a valid schedule
+	private boolean isValidSchedule = false;
+
+	/*
 	 * @return int array - Returns array that holds course
 	 * preferences of this student 
 	 */
@@ -30,7 +32,6 @@ public class Student {
 		return preference;
 	}
 
-<<<<<<< HEAD
 	/**
 	 * @return int - Returns the index of the lowest
 	 * preference of this student 
@@ -101,19 +102,6 @@ public class Student {
         this.preference[courseLoc] = 10;
     }
 
-	public int[] getSchedule() {
-		return schedule;
-	}
-
-    public int getCourse(int courseLoc) {
-        return schedule[courseLoc];
-    }
-
-	public void setSchedule(int[] scheduleIn) {
-		for(int i = 0;i < 7;i++)
-			this.schedule[i] = scheduleIn[i];
-	}
-
 	public void setSchedule(char[] scheduleIn) {
 		for(int i = 0;i < 5;i++)
 			this.Cschedule[i] = scheduleIn[i];
@@ -122,7 +110,8 @@ public class Student {
 	public synchronized void scheduleCourse(int courseid) {
         if(amntClasses < 5) {
             this.Cschedule[amntClasses] = getCourseName(courseid);
-            this.schedule[amntClasses] = courseid-1;
+            //this.schedule[amntClasses] = courseid-1;
+            this.totalPreference += this.preference[courseid-1];
             amntClasses++;
         }
     }
@@ -142,7 +131,15 @@ public class Student {
 		this.studentId = id;
 	}
 
-	/**
+    public double getTotalPref() {
+        return totalPreference;
+    }
+
+	public boolean isScheduleCheck() {
+		return isValidSchedule;
+    }
+            
+	/*
 	 * @return int - Returns the position of student in
 	 * StudentObjectPool
 	 */
@@ -191,4 +188,4 @@ public class Student {
 
 	}
 	
-}	
+}

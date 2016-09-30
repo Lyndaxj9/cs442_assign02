@@ -36,10 +36,6 @@ public class Logger{
             System.out.println(message);
     }
 
-    public static void writeOutput() {
-        System.out.println("Print something that is passed as an argument");
-    }
-
     public String toString() {
         return "Debug Level is " + debugLevel;
     }
