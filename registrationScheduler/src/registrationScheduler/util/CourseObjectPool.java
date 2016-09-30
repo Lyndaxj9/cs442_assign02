@@ -2,7 +2,7 @@ package registrationScheduler.util;
 
 import registrationScheduler.store.Course;
 
-public class CourseObjectPool extends ObjectPool {
+public class CourseObjectPool implements ObjectPool {
     private static CourseObjectPool objPool = new CourseObjectPool();
 
     public static int capacity = 7;
@@ -15,7 +15,7 @@ public class CourseObjectPool extends ObjectPool {
         return objPool;
     }
 
-    public void createObjects(){
+    public static void createObjects(){
         for (int i = 0; i<capacity; i++) {
             courses[i] = new Course();
         } 

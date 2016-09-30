@@ -3,28 +3,29 @@ package registrationScheduler.algo;
 //imports
 import registrationScheduler.store.Student;
 import registrationScheduler.store.Course;
+import registrationScheduler.util.ObjectPool;
 import registrationScheduler.util.CourseObjectPool;
 
 
 public class Scheduler {
     private Student student;
-    private CourseObjectPool coursepool;
+    private ObjectPool coursepool;
     private int backtrack = 0;
     //private Results;
 
-    public synchronized void assignFive(Student student, CourseObjectPool coursepool) {
+    public synchronized void assignFive(Student student, ObjectPool coursepool) {
         int assignedCourses = 0;
         int coursesTried = 0;
         while(assignedCourses < 5 && coursesTried < 7) {
             int course = student.getRandomPref();
             //int course = student.getLowestPref();
             if(course != -1) {
-                Course selectedcourse = coursepool.borrowObject(course);
+                Course selectedcourse = ((CourseObjectPool)coursepool).borrowObject(course);
 
                 while(selectedcourse == null && coursesTried < 7){
                     course = student.getRandomPref();
                     if(course != -1) {
-                        selectedcourse = coursepool.borrowObject(course);
+                        selectedcourse = ((CourseObjectPool)coursepool).borrowObject(course);
                     } else {
                         coursesTried++;
                     }
@@ -61,7 +62,7 @@ public class Scheduler {
         boolean updated = false;
         if(aCourse.getTotalStudents() < aCourse.getCapacity()) {
             aCourse.incrementStudentCount();
-            coursepool.returnObject(courseid);
+            ((CourseObjectPool)coursepool).returnObject(courseid);
             updated = true;
         }
         return updated;

@@ -16,7 +16,12 @@ public class WorkerThread implements Runnable  {
 
     FileProcessor filePro;
     StdoutDisplayInterface results;
+    //Results results;
     private static Logger log;
+    /*
+    private static CourseObjectPool coursepool;
+    private static StudentObjectPool studentpool;
+    */
     private static ObjectPool coursepool;
     private static ObjectPool studentpool;
     private Scheduler scheduler;
@@ -28,6 +33,7 @@ public class WorkerThread implements Runnable  {
     String line;
 	
 
+    //public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, StudentObjectPool s_pool, CourseObjectPool c_pool, Logger i_log, Scheduler i_schedule){
     public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, ObjectPool s_pool, ObjectPool c_pool, Logger i_log, Scheduler i_schedule){
         this.filePro = i_filePro;
         this.studentpool = s_pool;
@@ -92,6 +98,79 @@ public class WorkerThread implements Runnable  {
 
     }
 
+/*
+        Thread currentThread = Thread.currentThread();
+
+        int[] prefs = {4,2,3,1,5,6,7};
+        for (int i = 0; i<80; i++) {
+            //students[i] = new Student();
+            Student doSo = studentpool.borrowObject(i);
+            if(doSo != null) {
+                doSo.setPreference(prefs);
+                System.out.printf("Pref'd Student %d\n", i);
+                System.out.println(currentThread.getId());
+            }
+            //students[i].setPreference(prefs);
+        }
+
+        studentpool.returnAllObjects();
+
+        assignClasses(coursepool, studentpool, results);
+        */
+         
+        /*
+        for (counter = 0; counter<80; counter++) {
+            int course = lowestPref(studentpool, counter);
+            boolean gotT = false;
+            if(course != -1) {
+                gotT = updateCourse(coursepool, course);
+            }
+            System.out.printf("Student %d, Low %d ", counter, course);
+            System.out.println(gotT);
+        }
+        */
+        
+
+    
+
+    /*
+    public void assignClasses(CourseObjectPool c_pool, StudentObjectPool s_pool, StdoutDisplayInterface r_store) {
+//        for(int i=0; i<5; i++){
+        counter = 0;
+        for(; c_pool.getCurrentSchedule() < c_pool.maxClasses; c_pool.incrementCurrentSchedule()) {
+            int i = c_pool.getCurrentSchedule();
+            System.out.printf("LOOP ITER #%d\n", i);
+            while(s_pool.getCurrentObjectNum() < s_pool.capacity) {
+                Student currentStudent = s_pool.loopObjects(); 
+//                int currentStuNum = s_pool.getCurrentObjectNum();
+                int currentStuNum = currentStudent.getStudentid();
+                
+                if(currentStudent != null) {
+                    int studentCourse = currentStudent.getLowestPref();
+                    while(studentCourse != -1 && !updateCourse(c_pool, studentCourse)) {
+                        studentCourse = currentStudent.getLowestPref();
+                    }
+
+                    if(studentCourse != -1) {
+                        if(currentStuNum == 59) {
+                            System.out.printf("Class: %d\n", studentCourse);
+                        }
+                        currentStudent.scheduleCourse(studentCourse+1);
+                    }
+                    
+                   Thread currT = Thread.currentThread();
+                   System.out.printf("Student %d, Low %d, Thread %d\n", currentStuNum, studentCourse, currT.getId());
+
+                }
+            }
+            
+            s_pool.returnAllObjects();
+
+        }
+    }
+*/
+    
+
     public synchronized void printStudentsSchedules() {
         while(((StudentObjectPool)studentpool).getCurrentObjectNum() < ((StudentObjectPool)studentpool).capacity) {
             aStudent = ((StudentObjectPool)studentpool).loopObjects();
@@ -102,7 +181,7 @@ public class WorkerThread implements Runnable  {
             }
         
         }
-    }
+  }
 
 
 }
