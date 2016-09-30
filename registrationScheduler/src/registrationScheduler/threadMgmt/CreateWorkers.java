@@ -42,13 +42,14 @@ public class CreateWorkers  {
             threads[i] = new Thread(new WorkerThread(filePro, results, studentpool, coursepool, log, scheduler));
             threads[i].start();
         } 
-        //Are the threads also joined here I guess so?
+
         try{
             for(int i = 0; i<numThreads; i++) {
                 threads[i].join();
             }
         } catch(InterruptedException e){
-            //how to handle this exception?
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 

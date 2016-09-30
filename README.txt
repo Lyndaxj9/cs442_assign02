@@ -1,6 +1,6 @@
 CS442 Design Patterns
 Fall 2016
-PROJECT <1> README FILE
+PROJECT 2 README FILE
 
 Due Date: Friday, September 30, 2016
 Submission Date: Friday, September 30, 2016
@@ -38,20 +38,23 @@ FILES:
 
 [
 
-  Scheduler.java, 
+  Scheduler.java, the file that contains logic to assign students courses 
   Driver.java, the file associated with the program that contains main
   Course.java, the file that represents each course offered to students
   FileDisplayInterface.java, the interface file to write output to text file
   Results.java, the file that stores schedule of all students and write to the output
   StdoutDisplayInterface.java, the interface file to write output to standard output
   Student.java, the file that maintain details of a student
-  CreateWorkers.java,
-  WorkerThread.java, 
-  CourseObjectPool.java, 
+  CreateWorkers.java, the file creates the amount of threads passed to it
+  WorkerThread.java, the file contains the run method that contains logic
+    read file, assign classes, and store to Results
+  CourseObjectPool.java, the file contains functions to grab courses
   FileProcessor.java, the file that reads from input file
-  Logger.java, 
-  ObjectPool.java, 
-  StudentObjectPool.java, 
+  Logger.java, the file that prints debug messages based on the debug
+    level 
+  ObjectPool.java, the interface that contains basic methods for the
+    classes that implement it
+  StudentObjectPool.java, the file contains functions to grab students 
   README, the text file you are presently reading	 
 ]
 

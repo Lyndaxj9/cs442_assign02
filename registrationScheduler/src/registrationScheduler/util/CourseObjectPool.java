@@ -10,6 +10,9 @@ public class CourseObjectPool implements ObjectPool {
     public static Course[] courses = new Course[capacity];
     public static int[] check = new int[capacity];
 
+    /*
+     * @return CourseObjectPool object
+     */
     public static CourseObjectPool getObjectPool() {
         createObjects();
         return objPool;
@@ -21,6 +24,9 @@ public class CourseObjectPool implements ObjectPool {
         } 
     }
 
+    /*
+     * @return a Course object
+     */
     public static synchronized Course borrowObject(int item) {
         if(check[item] == 0){
             check[item] = 1;

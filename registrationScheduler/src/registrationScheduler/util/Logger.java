@@ -36,6 +36,10 @@ public class Logger{
             System.out.println(message);
     }
 
+    /*
+     * @return the string representation of Logger which is the debug
+     * level
+     */
     public String toString() {
         return "Debug Level is " + debugLevel;
     }

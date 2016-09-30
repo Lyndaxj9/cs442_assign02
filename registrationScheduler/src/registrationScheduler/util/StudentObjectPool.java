@@ -10,6 +10,9 @@ public class StudentObjectPool implements ObjectPool {
     public static Student[] students = new Student[capacity];
     public static int[] check = new int[capacity];
 
+    /*
+     * @return StudentObjectPool object
+     */
     public static StudentObjectPool getObjectPool() {
         createObjects();
         return objPool;
@@ -22,6 +25,9 @@ public class StudentObjectPool implements ObjectPool {
         } 
     }
 
+    /*
+     * @return returns a Student object
+     */
     public static synchronized Student borrowObject(int item){
         if(check[item] == 0) {
             check[item] = 1;
@@ -40,10 +46,16 @@ public class StudentObjectPool implements ObjectPool {
         currentStudent = 0;
     }
 
+    /*
+     * @return the current object number
+     */
     public synchronized static int getCurrentObjectNum(){
         return currentStudent;
     }
 
+    /*
+     * @return a Student object
+     */
     public synchronized static Student loopObjects(){
         while(check[currentStudent] != 0 && currentStudent<capacity) {
             currentStudent++;

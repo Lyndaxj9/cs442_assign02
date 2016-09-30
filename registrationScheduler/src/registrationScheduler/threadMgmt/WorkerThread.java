@@ -49,7 +49,6 @@ public class WorkerThread implements Runnable  {
             ((StudentObjectPool)studentpool).returnAllObjects();
             Thread.sleep(1000);
             ((Results)results).addToDataStruct(scheduler.getAvgPref());
-            //printStudentsSchedules();
 
         } catch(InterruptedException e) {
             e.printStackTrace();
@@ -98,16 +97,5 @@ public class WorkerThread implements Runnable  {
 
     }
 
-    public synchronized void printStudentsSchedules() {
-        while(((StudentObjectPool)studentpool).getCurrentObjectNum() < ((StudentObjectPool)studentpool).getCapacity()) {
-            aStudent = ((StudentObjectPool)studentpool).loopObjects();
-            int studentnum = ((StudentObjectPool)studentpool).getCurrentObjectNum();
-            if(aStudent != null) {
-                aStudent.printSchedule();
-            }
-        
-        }
-    }
-
-
+   
 }

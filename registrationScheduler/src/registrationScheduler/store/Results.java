@@ -44,6 +44,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 
 	}catch(IOException e){
 			e.printStackTrace();
+            System.exit(1);
 
    	}finally{
 		writer.close();

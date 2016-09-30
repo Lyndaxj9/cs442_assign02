@@ -15,12 +15,12 @@ public class FileProcessor {
     private static Logger log;
 	
 	//Constructor
-	public FileProcessor(Logger i_log){
+	public FileProcessor(String fileNameIn, Logger i_log){
         this.log = i_log;
 		
 
 		try{
-			file = new File("data.txt");
+			file = new File(fileNameIn);
 			filereader = new FileReader(file);
 			bufferedReader = new BufferedReader (filereader);
 			storeLines();
@@ -29,12 +29,15 @@ public class FileProcessor {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		
+            System.exit(1);
 		}
 	    	
 	
 	}
-	
+    
+	/*
+     * @return a line number
+     */
 	public synchronized int getLineCount(){
 		return this.lineCount;
 
@@ -56,6 +59,9 @@ public class FileProcessor {
 
 	}
 	
+    /*
+     * @return a line
+     */
 	public synchronized String getNextLine(){
 		this.lineCount++;
 		return lines[lineCount];	

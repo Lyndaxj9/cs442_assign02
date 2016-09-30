@@ -1,6 +1,5 @@
 package registrationScheduler.algo;
 
-//imports
 import registrationScheduler.store.Student;
 import registrationScheduler.store.Course;
 import registrationScheduler.util.ObjectPool;

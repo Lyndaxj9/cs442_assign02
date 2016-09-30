@@ -46,17 +46,16 @@ public class Driver{
         CourseObjectPool coursePool = CourseObjectPool.getObjectPool();
         StudentObjectPool studentPool = StudentObjectPool.getObjectPool();
 
-        FileProcessor fileProcessor = new FileProcessor(log);
+        FileProcessor fileProcessor = new FileProcessor(inputFile, log);
         StdoutDisplayInterface storeResults = new Results(log);
         Scheduler scheduler = new Scheduler();
-        Student[] students = new Student[80];
 
         CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, studentPool, coursePool, log, scheduler);
 
         workerGenerate.startWorkers(numThreads);
 
 	((Results)storeResults).writeSchedulesToScreen();
-	((Results)storeResults).writeSchedulesToFile("output.txt");
+	((Results)storeResults).writeSchedulesToFile(outputFile);
 	
 
     }
