@@ -7,13 +7,24 @@ import registrationScheduler.util.ObjectPool;
 import registrationScheduler.util.CourseObjectPool;
 
 
+/*
+ * This class contains the logic and methods for assigning students 
+ * to classes
+ */
 public class Scheduler {
+    //Current student being scheduled
     private Student student;
-    private ObjectPool coursepool;
-    private double averagePref = 0;
-    //private int backtrack = 0;
-    //private Results;
 
+    //Object pool to get courses
+    private ObjectPool coursepool;
+
+    //Double value containing the total average of all the student 
+    //preferences
+    private double averagePref = 0;
+
+    /*
+     * Assigns a student classes randomlly
+     */
     public synchronized void assignFive(Student student, ObjectPool coursepool) {
         int assignedCourses = 0;
         int coursesTried = 0;
@@ -47,21 +58,9 @@ public class Scheduler {
     } 
 
     /*
-    private synchronized void reassignCourses(Student fullStu, Student partStu, CourseObjectPool coursepool){
-        for(int i = 0; i<7; i++) {
-            Course availCourse = coursepool.borrowObject(i);
-            while(availCourse == null) {
-                availCourse = coursepool.borrowObject(i);
-            }
-            if(availCourse.getTotalStudents()<availCourse.getCapacity()) {
-                Course fullCourse = coursepool.borrowObject(fullStu.getCourse(0));
-                while(fullCourse == null);
-
-            }
-        }
-    }
-    */
-
+     * Checks if a course is available
+     * @return boolean true if course is available
+     */
     private boolean checkCourse(Course aCourse, int courseid) {
         boolean updated = false;
         if(aCourse.getTotalStudents() < aCourse.getCapacity()) {
@@ -72,6 +71,9 @@ public class Scheduler {
         return updated;
     }
 
+    /*
+     * @return double the average preference score for all the student's assigned classes
+     */
     public double getAvgPref() {
         return averagePref/80;
     }

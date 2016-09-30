@@ -24,12 +24,7 @@ public class Student {
 	//Validates whether a student can have a valid schedule
 	private boolean isValidSchedule = false;
 
-	private int amntClasses = 0;
-	
-
-	
-	
-	/**
+	/*
 	 * @return int array - Returns array that holds course
 	 * preferences of this student 
 	 */
@@ -107,19 +102,6 @@ public class Student {
         this.preference[courseLoc] = 10;
     }
 
-	public int[] getSchedule() {
-		return schedule;
-	}
-
-    public int getCourse(int courseLoc) {
-        return schedule[courseLoc];
-    }
-
-	public void setSchedule(int[] scheduleIn) {
-		for(int i = 0;i < 7;i++)
-			this.schedule[i] = scheduleIn[i];
-	}
-
 	public void setSchedule(char[] scheduleIn) {
 		for(int i = 0;i < 5;i++)
 			this.Cschedule[i] = scheduleIn[i];
@@ -155,6 +137,7 @@ public class Student {
 
 	public boolean isScheduleCheck() {
 		return isValidSchedule;
+    }
             
 	/*
 	 * @return int - Returns the position of student in
@@ -205,4 +188,4 @@ public class Student {
 
 	}
 	
-}	
+}
