@@ -7,6 +7,7 @@ import registrationScheduler.util.FileProcessor;
 import registrationScheduler.store.StdoutDisplayInterface;
 import registrationScheduler.store.Student;
 import registrationScheduler.store.Course;
+import registrationScheduler.store.Results;
 
 public class WorkerThread implements Runnable  {
 
@@ -154,6 +155,8 @@ public class WorkerThread implements Runnable  {
     }
 
     public void assignClasses(CourseObjectPool c_pool, StudentObjectPool s_pool, StdoutDisplayInterface r_store) {
+	//r_store = new Results(log);
+	//Results results = (Results) r_store;
 //        for(int i=0; i<5; i++){
         counter = 0;
         for(; c_pool.getCurrentSchedule() < c_pool.maxClasses; c_pool.incrementCurrentSchedule()) {
@@ -178,7 +181,9 @@ public class WorkerThread implements Runnable  {
                     }
                     
                    Thread currT = Thread.currentThread();
-                   System.out.printf("Student %d, Low %d, Thread %d\n", currentStuNum, studentCourse, currT.getId());
+
+		   //results.addToDataStruct(currentStudent);
+                   //System.out.printf("Student %d, Low %d, Thread %d\n", currentStuNum, studentCourse, currT.getId());
 
                 }
             }
@@ -195,7 +200,7 @@ public class WorkerThread implements Runnable  {
             aStudent = studentpool.loopObjects();
             int studentnum = studentpool.getCurrentObjectNum();
             if(aStudent != null) {
-                System.out.printf("Student %d  ", studentnum);
+                //System.out.printf("Student %d  ", studentnum);
                 aStudent.printSchedule();
             }
         

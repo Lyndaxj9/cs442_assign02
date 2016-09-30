@@ -4,72 +4,78 @@ public class Student {
 
 	//An array to store four preferences of a student
 	private int[] preference = new int [7];
-	
-	//An array to store the final schedule of a student
-	private int[] schedule = new int [7];
-    
+
+
 	//An array to store the final schedule of a student
 	private char[] Cschedule = new char[5];
-	
+
 	//The name of the student
 	private String name;
 
-    //Position of student in StudentObjectPool
-    private int studentId;
+	//Position of student in StudentObjectPool
+	private int studentId;
 
-    private int amntClasses = 0;
+	private int amntClasses = 0;
 	
-	//Validates whether a student can have a valid schedule
-	private boolean isValidSchedule = false;
-	
+
 	
 	
+	/**
+	 * @return int array - Returns array that holds course
+	 * preferences of this student 
+	 */
 	public int[] getPreference() {
 		return preference;
 	}
 
-    public synchronized int getLowestPref() {
-        int minValue = 10;
-        int minLocation = -1;
-        for (int i = 0; i<7;i++) {
-            if(minValue > this.preference[i]) {
-                minValue = this.preference[i];
-                minLocation = i;
-            }
-        }
+	/**
+	 * @return int - Returns the index of the lowest
+	 * preference of this student 
+	 */
+	public synchronized int getLowestPref() {
+		int minValue = 10;
+		int minLocation = -1;
+		for (int i = 0; i<7;i++) {
+			if(minValue > this.preference[i]) {
+				minValue = this.preference[i];
+				minLocation = i;
+			}
+		}
 
-        if(minLocation != -1) {
-            preference[minLocation] = 10;
-        }
-        return minLocation;
-    }
+		if(minLocation != -1) {
+			preference[minLocation] = 10;
+		}
+		return minLocation;
+	}
 
 	public void setPreference(int[] preferenceIn) {
 		for(int i = 0;i < 7;i++)
 			this.preference[i] = preferenceIn[i];
 	}
 
-	public int[] getSchedule() {
-		return schedule;
+	/**
+	 * @return char array - Returns the schedule of this student
+	 */
+	public char[] getCschedule() {
+		return this.Cschedule;
 	}
 
-	public void setSchedule(int[] scheduleIn) {
-		for(int i = 0;i < 7;i++)
-			this.schedule[i] = scheduleIn[i];
-	}
 
 	public void setSchedule(char[] scheduleIn) {
 		for(int i = 0;i < 5;i++)
 			this.Cschedule[i] = scheduleIn[i];
 	}
 
-    public synchronized void scheduleCourse(int courseid) {
-        if(amntClasses < 5) {
-            this.Cschedule[amntClasses] = getCourseName(courseid);
-            amntClasses++;
-        }
-    }
+	public synchronized void scheduleCourse(int courseid) {
+	        if(amntClasses < 5) {
+	            this.Cschedule[amntClasses] = getCourseName(courseid);
+	            amntClasses++;
+	        }
+	}
 
+	/**
+	 * @return string - Returns the student's name
+	 */
 	public String getName() {
 		return name;
 	}
@@ -78,31 +84,32 @@ public class Student {
 		this.name = nameIn;
 	}
 
-    public void setStudentid(int id) {
-        this.studentId = id;
-    }
-
-    public int getStudentid() {
-        return studentId;
-    }
-
-	public boolean isScheduleCheck() {
-		return isValidSchedule;
+	public void setStudentid(int id) {
+		this.studentId = id;
 	}
 
-	public void setScheduleCheck(boolean scheduleCheckIn) {
-		this.isValidSchedule = scheduleCheckIn;
+	/**
+	 * @return int - Returns the position of student in
+	 * StudentObjectPool
+	 */
+	public int getStudentid() {
+	        return studentId;
 	}
-    
-    public synchronized void printSchedule(){
-        for(int i = 0; i<5; i++) {
-            System.out.printf("%c ", Cschedule[i]);
-        }
-        System.out.printf("\n");
-    }
+
+
+  
+	public synchronized void printSchedule(){
+	        for(int i = 0; i<5; i++) {
+	            System.out.printf("%c ", Cschedule[i]);
+	        }
+	        System.out.printf("\n");
+	}
 	
+	/**
+	 * @return char - Returns the course name based in courseID
+	 */
 	public char getCourseName(int courseID) {
-        char courseName = ' ';
+        	char courseName = ' ';
 		switch(courseID){
 			case 1:
                 courseName = 'A';
@@ -126,7 +133,7 @@ public class Student {
                 courseName = 'G';
 			    break;
 		}
-    return courseName;
+    		return courseName;
 
 	}
 	
