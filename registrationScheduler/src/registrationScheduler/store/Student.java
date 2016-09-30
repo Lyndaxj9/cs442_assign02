@@ -1,5 +1,7 @@
 package registrationScheduler.store;
 
+import java.util.Random;
+
 public class Student {
 
 	//An array to store four preferences of a student
@@ -28,6 +30,7 @@ public class Student {
 		return preference;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * @return int - Returns the index of the lowest
 	 * preference of this student 
@@ -42,11 +45,45 @@ public class Student {
 			}
 		}
 
+/*
 		if(minLocation != -1) {
 			preference[minLocation] = 10;
 		}
+*/
 		return minLocation;
 	}
+
+    public synchronized int getHighestPref() {
+        int maxValue = 0;
+        int maxLocation = -1; 
+        for(int i = 0; i<7;i++) {
+            if(maxValue < this.preference[i]) {
+                maxValue = this.preference[i];
+                maxLocation = i;
+            } 
+        }
+
+        return maxLocation;
+    }
+
+    public synchronized int getRandomPref() {
+        int selectedCourse = -1;
+        int attempts = 0;
+        Random rand = new Random();
+        int randomNum = rand.nextInt(7);
+        
+        while(this.preference[randomNum] == 10 && attempts < 7) {
+            randomNum = rand.nextInt(7);
+            attempts++;
+        }
+        if(this.preference[randomNum] != 10) {
+            selectedCourse = randomNum;
+        }
+
+        //System.out.printf("Random int course: %d", randomNum);
+
+        return selectedCourse;
+    }
 
 	public void setPreference(int[] preferenceIn) {
 		for(int i = 0;i < 7;i++)
@@ -60,6 +97,22 @@ public class Student {
 		return this.Cschedule;
 	}
 
+    public void voidPreference(int courseLoc) {
+        this.preference[courseLoc] = 10;
+    }
+
+	public int[] getSchedule() {
+		return schedule;
+	}
+
+    public int getCourse(int courseLoc) {
+        return schedule[courseLoc];
+    }
+
+	public void setSchedule(int[] scheduleIn) {
+		for(int i = 0;i < 7;i++)
+			this.schedule[i] = scheduleIn[i];
+	}
 
 	public void setSchedule(char[] scheduleIn) {
 		for(int i = 0;i < 5;i++)
@@ -67,11 +120,12 @@ public class Student {
 	}
 
 	public synchronized void scheduleCourse(int courseid) {
-	        if(amntClasses < 5) {
-	            this.Cschedule[amntClasses] = getCourseName(courseid);
-	            amntClasses++;
-	        }
-	}
+        if(amntClasses < 5) {
+            this.Cschedule[amntClasses] = getCourseName(courseid);
+            this.schedule[amntClasses] = courseid-1;
+            amntClasses++;
+        }
+    }
 
 	/**
 	 * @return string - Returns the student's name

@@ -34,8 +34,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 				System.out.print(" " + schedule[i][j]);
 			}
 			System.out.print("\n");
-	}
-	System.out.print("The average preference value is X.Y");
+		}
     }
 
     public void writeSchedulesToFile(String fileName) {
@@ -48,7 +47,6 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 			}
 			writer.print("\n");
 		}
-		writer.print("The average preference value is X.Y");
 
 	}catch(IOException e){
 			e.printStackTrace();
@@ -56,9 +54,9 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
    	}finally{
 		writer.close();
 	}
-	// ..
-        System.out.println("writeSchedulesToScreen()");
     }
+
+
 
     public void updateSchedule(int studentId, int courseNum, int currentLine) {
         switch(courseNum) {

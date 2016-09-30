@@ -1,21 +1,29 @@
 package registrationScheduler.threadMgmt;
 
 import registrationScheduler.util.Logger;
+import registrationScheduler.util.ObjectPool;
 import registrationScheduler.util.CourseObjectPool;
 import registrationScheduler.util.StudentObjectPool;
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.store.StdoutDisplayInterface;
+import registrationScheduler.store.FileDisplayInterface;
+import registrationScheduler.store.Results;
 import registrationScheduler.store.Student;
 import registrationScheduler.store.Course;
+<<<<<<< HEAD
 import registrationScheduler.store.Results;
+=======
+import registrationScheduler.algo.Scheduler;
+>>>>>>> 1c6e60b2b74dd954de37e58bcd3706f99869bf60
 
 public class WorkerThread implements Runnable  {
 
     FileProcessor filePro;
     StdoutDisplayInterface results;
     private static Logger log;
-    private static CourseObjectPool coursepool;
-    private static StudentObjectPool studentpool;
+    private static ObjectPool coursepool;
+    private static ObjectPool studentpool;
+    private Scheduler scheduler;
     int counter;
     String [] parsedString = new String [8];
     int [] prefArray = new int [7];
@@ -24,14 +32,13 @@ public class WorkerThread implements Runnable  {
     String line;
 	
 
-    // createWorkers
-    public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, StudentObjectPool s_pool, CourseObjectPool c_pool, Logger i_log){
-    //public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, Student[] i_student, CourseObjectPool i_pool, Logger i_log){
+    public WorkerThread(FileProcessor i_filePro, StdoutDisplayInterface i_results, ObjectPool s_pool, ObjectPool c_pool, Logger i_log, Scheduler i_schedule){
         this.filePro = i_filePro;
         this.studentpool = s_pool;
         this.results = i_results;
         this.coursepool = c_pool;
         this.log = i_log;
+        this.scheduler = i_schedule;
         log.writeMessage("CONSTRUCTOR: WorkerThread() called.", Logger.DebugLevel.CONSTRUCTOR);
     }
 
@@ -42,36 +49,22 @@ public class WorkerThread implements Runnable  {
         storeStudentInfo();
         
             storeStudentInfo();
-            studentpool.returnAllObjects();
-            assignClasses(coursepool, studentpool, results);
+            ((StudentObjectPool)studentpool).returnAllObjects();
             Thread.sleep(1000);
-            /*
-            aStudent = studentpool.borrowObject(59);
+            aStudent = ((StudentObjectPool)studentpool).borrowObject(79);
             if(aStudent!=null){
                 aStudent.printSchedule();
             }
-            */
-            printStudentsSchedules();
+            //printStudentsSchedules();
 
         } catch(InterruptedException e) {
 // ...
         }
      
-        /*
-        while(studentpool.getCurrentObjectNum() < 80) {
-            aStudent = studentpool.loopObjects();
-            int stunum = studentpool.getCurrentObjectNum();
-            System.out.printf("Student_%d ", stunum);
-            int[] prf = aStudent.getPreference();
-            for(int i = 0; i<7; i++) {
-                System.out.printf("%d ", prf[i]);
-            }
-            System.out.printf("\n");
-
-        */
-        
     }
 
+    
+    //-- METHODS ----------------------------------------------------
 	public synchronized void storeStudentInfo(){
 				while( (getLine())!= null){
 				}
@@ -84,13 +77,15 @@ public class WorkerThread implements Runnable  {
 
 		if(line != null){
 			parsedString = line.split(delim);
-			aStudent = studentpool.borrowObject(lineCount);
+			aStudent = ((StudentObjectPool)studentpool).borrowObject(lineCount);
             if(aStudent != null) {
                 aStudent.setName(parsedString[0]);
                 for(int i = 1;i<8;i++){
                     prefArray[i-1] = Integer.parseInt(parsedString[i]);
                 }
                 aStudent.setPreference(prefArray);
+                scheduler.assignFive(aStudent, coursepool);
+                ((StudentObjectPool)studentpool).returnObject(lineCount);
                 //students[lineCount] = aStudent;
                 Thread currentThread = Thread.currentThread();			
             }
@@ -101,6 +96,7 @@ public class WorkerThread implements Runnable  {
 
     }
 
+<<<<<<< HEAD
 /*
         Thread currentThread = Thread.currentThread();
 
@@ -195,17 +191,19 @@ public class WorkerThread implements Runnable  {
 
     
 
+=======
+>>>>>>> 1c6e60b2b74dd954de37e58bcd3706f99869bf60
     public synchronized void printStudentsSchedules() {
-        while(studentpool.getCurrentObjectNum() < studentpool.capacity) {
-            aStudent = studentpool.loopObjects();
-            int studentnum = studentpool.getCurrentObjectNum();
+        while(((StudentObjectPool)studentpool).getCurrentObjectNum() < ((StudentObjectPool)studentpool).capacity) {
+            aStudent = ((StudentObjectPool)studentpool).loopObjects();
+            int studentnum = ((StudentObjectPool)studentpool).getCurrentObjectNum();
             if(aStudent != null) {
                 //System.out.printf("Student %d  ", studentnum);
                 aStudent.printSchedule();
             }
         
         }
-  }
+    }
 
 
 }

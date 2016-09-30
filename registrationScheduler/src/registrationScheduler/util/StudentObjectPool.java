@@ -2,7 +2,7 @@ package registrationScheduler.util;
 
 import registrationScheduler.store.Student;
 
-public class StudentObjectPool{
+public class StudentObjectPool implements ObjectPool {
     private static StudentObjectPool objPool = new StudentObjectPool();
 
     public static int capacity = 80;
@@ -30,6 +30,9 @@ public class StudentObjectPool{
         return null;
     }
 
+    public static synchronized void returnObject(int item){
+        check[item] = 0;
+    }
     public static synchronized void returnAllObjects(){
         for (int i = 0; i<capacity; i++) {
             check[i] = 0;
@@ -55,9 +58,5 @@ public class StudentObjectPool{
         
         return null;
     }
-    //Have methods to:
-    //validate
-    //borrow
-    //return
 
 }
