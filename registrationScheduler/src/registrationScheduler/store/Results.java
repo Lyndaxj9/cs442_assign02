@@ -13,7 +13,10 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
     private static Logger log;
     private int maxClasses = 5;
     private int totalStudents = 80;
-    public char[][] schedule = new char[totalStudents][maxClasses+1];
+    public String[][] schedule = new String[totalStudents][2];
+    private String scheduleClass;
+	private int dataStructIndex = -1;
+	
     //take up less space take less time to printer out values
 
     public Results(Logger i_log){
@@ -29,11 +32,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 
     public void writeSchedulesToScreen() {
 	for(int i = 0; i<totalStudents;i++){
-			System.out.print(schedule[i][0]);
-			for(int j = 1; j <= maxClasses;j++){
-				System.out.print(" " + schedule[i][j]);
-			}
-			System.out.print("\n");
+			System.out.println(schedule[i][0] + " " +  schedule[i][1]);
 	}
 	System.out.print("The average preference value is X.Y");
     }
@@ -42,11 +41,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
         try {	
 		writer = new PrintWriter(fileName);
 		for(int i = 0; i<totalStudents;i++){
-			writer.print(schedule[i][0]);
-			for(int j = 1; j <= maxClasses;j++){
-				writer.print(" " + schedule[i][j]);
-			}
-			writer.print("\n");
+			writer.println (schedule[i][0]+ " " + schedule[i][1]);
 		}
 		writer.print("The average preference value is X.Y");
 
@@ -60,31 +55,22 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
         System.out.println("writeSchedulesToScreen()");
     }
 
-    public void updateSchedule(int studentId, int courseNum, int currentLine) {
-        switch(courseNum) {
-            case 1:
-                schedule[studentId][currentLine] = 'A';
-                break;
-            case 2:
-                schedule[studentId][currentLine] = 'B';
-                break; 
-            case 3:
-                schedule[studentId][currentLine] = 'C';
-                break;
-            case 4:
-                schedule[studentId][currentLine] = 'D';
-                break; 
-            case 5:
-                schedule[studentId][currentLine] = 'E';
-                break; 
-            case 6:
-                schedule[studentId][currentLine] = 'F';
-                break; 
-            case 7:
-                schedule[studentId][currentLine] = 'G';
-                break; 
-        }
-    }
+ public synchronized void addToDataStruct(Student student){
+	scheduleClass = "";
+	dataStructIndex++;
+	//System.out.println("This is the Student's name" + student.getName());
+	schedule[dataStructIndex][0] = student.getName();
+	
+	for(int j = 0;j<5;j++){
+		scheduleClass = scheduleClass + " " + student.getCschedule()[j];
+
+	}
+	schedule[dataStructIndex][1] = scheduleClass;
+	//System.out.println( schedule[dataStructIndex][0] + schedule[dataStructIndex][1] );
+
+   }
+
+
 
 } 
 
