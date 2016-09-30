@@ -7,7 +7,7 @@ import registrationScheduler.util.ObjectPool;
 import registrationScheduler.util.CourseObjectPool;
 import registrationScheduler.util.StudentObjectPool;
 import registrationScheduler.algo.Scheduler;
-
+import registrationScheduler.store.StdoutDisplayInterface;
 public class Driver{
 
     public static void main(String[] args) {
@@ -47,13 +47,17 @@ public class Driver{
         StudentObjectPool studentPool = StudentObjectPool.getObjectPool();
 
         FileProcessor fileProcessor = new FileProcessor(log);
-        Results storeResults = new Results(log);
+        StdoutDisplayInterface storeResults = new Results(log);
         Scheduler scheduler = new Scheduler();
         Student[] students = new Student[80];
 
         CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, studentPool, coursePool, log, scheduler);
 
         workerGenerate.startWorkers(numThreads);
+
+	((Results)storeResults).writeSchedulesToScreen();
+	((Results)storeResults).writeSchedulesToFile("output.txt");
+	
 
     }
 }

@@ -31,7 +31,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 	for(int i = 0; i<totalStudents;i++){
 			System.out.println(schedule[i][0] + " " +  schedule[i][1]);
 	}
-	System.out.print("The average preference value is X.Y");
+	System.out.printf("The average preference value is %.3f", Double.parseDouble(schedule[totalStudents][0]));
     }
 
     public void writeSchedulesToFile(String fileName) {
@@ -40,7 +40,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 		for(int i = 0; i<totalStudents;i++){
 			writer.println (schedule[i][0]+ " " + schedule[i][1]);
 		}
-		writer.print("The average preference value is X.Y");
+		writer.printf("The average preference value is %.3f", Double.parseDouble(schedule[totalStudents][0]));
 
 	}catch(IOException e){
 			e.printStackTrace();
@@ -49,7 +49,6 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 		writer.close();
 	}
 	// ..
-        System.out.println("writeSchedulesToScreen()");
     }
 
     public synchronized void addToDataStruct(Student student){
