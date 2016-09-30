@@ -10,7 +10,11 @@ import registrationScheduler.store.FileDisplayInterface;
 import registrationScheduler.store.Results;
 import registrationScheduler.store.Student;
 import registrationScheduler.store.Course;
+<<<<<<< HEAD
+import registrationScheduler.store.Results;
+=======
 import registrationScheduler.algo.Scheduler;
+>>>>>>> 1c6e60b2b74dd954de37e58bcd3706f99869bf60
 
 public class WorkerThread implements Runnable  {
 
@@ -93,12 +97,109 @@ public class WorkerThread implements Runnable  {
 
     }
 
+<<<<<<< HEAD
+/*
+        Thread currentThread = Thread.currentThread();
+
+        int[] prefs = {4,2,3,1,5,6,7};
+        for (int i = 0; i<80; i++) {
+            //students[i] = new Student();
+            Student doSo = studentpool.borrowObject(i);
+            if(doSo != null) {
+                doSo.setPreference(prefs);
+                System.out.printf("Pref'd Student %d\n", i);
+                System.out.println(currentThread.getId());
+            }
+            //students[i].setPreference(prefs);
+        }
+
+        studentpool.returnAllObjects();
+
+        assignClasses(coursepool, studentpool, results);
+        */
+         
+        /*
+        for (counter = 0; counter<80; counter++) {
+            int course = lowestPref(studentpool, counter);
+            boolean gotT = false;
+            if(course != -1) {
+                gotT = updateCourse(coursepool, course);
+            }
+            System.out.printf("Student %d, Low %d ", counter, course);
+            System.out.println(gotT);
+        }
+        */
+        
+
+    
+    public synchronized int lowestPref(StudentObjectPool s_pool, int n){
+        Student currentStudent = s_pool.borrowObject(n);    
+        if(currentStudent != null) {
+            return currentStudent.getLowestPref();
+        }
+        return -1;
+    }
+
+    public synchronized boolean updateCourse(CourseObjectPool c_pool, int c) {
+        Course selectedCourse = c_pool.borrowObject(c);
+        boolean updated = false;
+        if (selectedCourse != null && selectedCourse.getTotalStudents() < selectedCourse.getCapacity()) {
+            selectedCourse.incrementStudentCount();
+            c_pool.returnObject(c);
+            updated = true;
+        }
+        return updated;
+    }
+
+    public void assignClasses(CourseObjectPool c_pool, StudentObjectPool s_pool, StdoutDisplayInterface r_store) {
+	//r_store = new Results(log);
+	//Results results = (Results) r_store;
+//        for(int i=0; i<5; i++){
+        counter = 0;
+        for(; c_pool.getCurrentSchedule() < c_pool.maxClasses; c_pool.incrementCurrentSchedule()) {
+            int i = c_pool.getCurrentSchedule();
+            System.out.printf("LOOP ITER #%d\n", i);
+            while(s_pool.getCurrentObjectNum() < s_pool.capacity) {
+                Student currentStudent = s_pool.loopObjects(); 
+//                int currentStuNum = s_pool.getCurrentObjectNum();
+                int currentStuNum = currentStudent.getStudentid();
+                
+                if(currentStudent != null) {
+                    int studentCourse = currentStudent.getLowestPref();
+                    while(studentCourse != -1 && !updateCourse(c_pool, studentCourse)) {
+                        studentCourse = currentStudent.getLowestPref();
+                    }
+
+                    if(studentCourse != -1) {
+                        if(currentStuNum == 59) {
+                            System.out.printf("Class: %d\n", studentCourse);
+                        }
+                        currentStudent.scheduleCourse(studentCourse+1);
+                    }
+                    
+                   Thread currT = Thread.currentThread();
+
+		   //results.addToDataStruct(currentStudent);
+                   //System.out.printf("Student %d, Low %d, Thread %d\n", currentStuNum, studentCourse, currT.getId());
+
+                }
+            }
+            
+            s_pool.returnAllObjects();
+
+        }
+    }
+
+    
+
+=======
+>>>>>>> 1c6e60b2b74dd954de37e58bcd3706f99869bf60
     public synchronized void printStudentsSchedules() {
         while(((StudentObjectPool)studentpool).getCurrentObjectNum() < ((StudentObjectPool)studentpool).capacity) {
             aStudent = ((StudentObjectPool)studentpool).loopObjects();
             int studentnum = ((StudentObjectPool)studentpool).getCurrentObjectNum();
             if(aStudent != null) {
-                System.out.printf("Student %d  ", studentnum);
+                //System.out.printf("Student %d  ", studentnum);
                 aStudent.printSchedule();
             }
         

@@ -1,0 +1,52 @@
+import registrationScheduler.util.FileProcessor;
+import registrationScheduler.threadMgmt.CreateWorkers;
+import registrationScheduler.store.Results;
+import registrationScheduler.store.Student;
+import registrationScheduler.util.Logger;
+import registrationScheduler.util.CourseObjectPool;
+import registrationScheduler.util.StudentObjectPool;
+import registrationScheduler.store.StdoutDisplayInterface;
+import registrationScheduler.store.FileDisplayInterface;
+
+public class Driver{
+
+    public static void main(String[] args) {
+
+	String inputFile = "data.txt";
+	String outputFile = "output.txt"; 
+	int numWorkers = 2;
+	int DEBUG_VALUE = 0;
+
+/**
+	if(args.length >= 4){
+
+	
+	
+		String inputFile = args[0];
+		String outputFile =args[1];
+		try{
+			numWorkers = Integer.parseInt(args[2]);
+			DEBUG_VALUE = nteger.parseInt(args[3]);
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+			System.exit(1);
+	
+		}
+*/
+		Logger log = Logger.getInstance();
+		log.setDebugValue(DEBUG_VALUE);
+		CourseObjectPool coursePool = CourseObjectPool.getObjectPool();
+		StudentObjectPool studentPool = StudentObjectPool.getObjectPool();
+
+		FileProcessor fileProcessor = new FileProcessor(log,inputFile);
+		StdoutDisplayInterface storeResults = new Results(log);
+		CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, studentPool, coursePool, log);
+
+		workerGenerate.startWorkers(numWorkers);
+		
+		//call results.writeSchedulesToScreen();
+		//call results.writeSchedulesToFile(outputFile);
+	//}
+        
+    }
+}
