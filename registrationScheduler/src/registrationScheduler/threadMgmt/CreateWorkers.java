@@ -8,6 +8,7 @@ import registrationScheduler.util.CourseObjectPool;
 import registrationScheduler.util.StudentObjectPool;
 import registrationScheduler.util.Logger;
 import registrationScheduler.algo.Scheduler;
+import registrationScheduler.store.Results;
 
 public class CreateWorkers  {
 
