@@ -10,7 +10,8 @@ import registrationScheduler.util.CourseObjectPool;
 public class Scheduler {
     private Student student;
     private ObjectPool coursepool;
-    private int backtrack = 0;
+    private double averagePref = 0;
+    //private int backtrack = 0;
     //private Results;
 
     public synchronized void assignFive(Student student, ObjectPool coursepool) {
@@ -41,9 +42,11 @@ public class Scheduler {
                 }
             }
         }
-        //if(assignedCourses < 5)
+
+        averagePref += student.getTotalPref()/5;
     } 
 
+    /*
     private synchronized void reassignCourses(Student fullStu, Student partStu, CourseObjectPool coursepool){
         for(int i = 0; i<7; i++) {
             Course availCourse = coursepool.borrowObject(i);
@@ -57,6 +60,7 @@ public class Scheduler {
             }
         }
     }
+    */
 
     private boolean checkCourse(Course aCourse, int courseid) {
         boolean updated = false;
@@ -66,5 +70,9 @@ public class Scheduler {
             updated = true;
         }
         return updated;
+    }
+
+    public double getAvgPref() {
+        return averagePref/80;
     }
 }

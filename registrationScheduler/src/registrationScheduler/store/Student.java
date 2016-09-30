@@ -20,6 +20,8 @@ public class Student {
     private int studentId;
 
     private int amntClasses = 0;
+
+    private double totalPreference = 0;
 	
 	//Validates whether a student can have a valid schedule
 	private boolean isValidSchedule = false;
@@ -111,6 +113,7 @@ public class Student {
         if(amntClasses < 5) {
             this.Cschedule[amntClasses] = getCourseName(courseid);
             this.schedule[amntClasses] = courseid-1;
+            this.totalPreference += this.preference[courseid-1];
             amntClasses++;
         }
     }
@@ -129,6 +132,10 @@ public class Student {
 
     public int getStudentid() {
         return studentId;
+    }
+
+    public double getTotalPref() {
+        return totalPreference;
     }
 
 	public boolean isScheduleCheck() {

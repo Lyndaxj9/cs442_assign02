@@ -15,24 +15,35 @@ public class Driver{
         // TODO : get command line inputs
         String inputFile = "";
         String outputFile = "";
-        int numThreads;
-        int debugValue;
-        // How to handle exceptions
+        int numThreads = -1;
+        int debugValue = -1;
 
+        //Get the command line arguments and make sure that they
+        //are valid
         if(args.length == 4) {
             inputFile = args[0];
             outputFile = args[1];
-            numThreads = Integer.parseInt(args[2]);
-            debugValue = Integer.parseInt(args[3]);
 
-            /*
-            if(numThreads < 0 || numThreads > 3){
-                Syste
+            try{
+
+                numThreads = Integer.parseInt(args[2]);
+                debugValue = Integer.parseInt(args[3]);
+
+                if(numThreads < 0 || numThreads > 3){
+                    System.out.println("Incorrect Value for Number of Threads");
+                    System.exit(1);
+                } else if(debugValue < 0 || debugValue > 4) {
+                    System.out.println("Debug Value must be between 0 and 4");
+                    System.exit(1);
+                }
+            } catch(NumberFormatException e) {
+                //print to stderr
+                System.exit(1);
             }
-            */
         }
+
         Logger log = Logger.getInstance();
-        log.setDebugValue(3);
+        log.setDebugValue(debugValue);
         CourseObjectPool coursePool = CourseObjectPool.getObjectPool();
         StudentObjectPool studentPool = StudentObjectPool.getObjectPool();
 
@@ -43,7 +54,7 @@ public class Driver{
 
         CreateWorkers workerGenerate = new CreateWorkers(fileProcessor, storeResults, studentPool, coursePool, log, scheduler);
 
-        workerGenerate.startWorkers(3);
+        workerGenerate.startWorkers(numThreads);
 
     }
 }

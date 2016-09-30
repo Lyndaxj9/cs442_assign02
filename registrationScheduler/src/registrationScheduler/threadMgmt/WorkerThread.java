@@ -51,6 +51,7 @@ public class WorkerThread implements Runnable  {
             if(aStudent!=null){
                 aStudent.printSchedule();
             }
+            System.out.printf("The average preference is: %f\n", scheduler.getAvgPref());
             //printStudentsSchedules();
 
         } catch(InterruptedException e) {
