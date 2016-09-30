@@ -12,7 +12,6 @@ public class Driver{
 
     public static void main(String[] args) {
 
-        // TODO : get command line inputs
         String inputFile = "";
         String outputFile = "";
         int numThreads = -1;
@@ -37,7 +36,7 @@ public class Driver{
                     System.exit(1);
                 }
             } catch(NumberFormatException e) {
-                //print to stderr
+                e.printStackTrace();
                 System.exit(1);
             }
         }

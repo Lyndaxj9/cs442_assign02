@@ -53,10 +53,10 @@ public class WorkerThread implements Runnable  {
             }
             ((Results)results).addToDataStruct(scheduler.getAvgPref());
             System.out.printf("The average preference is: %f\n", scheduler.getAvgPref());
-            //printStudentsSchedules();
 
         } catch(InterruptedException e) {
-// ...
+            e.printStackTrace();
+            System.exit(1);
         }
      
     }
@@ -84,7 +84,7 @@ public class WorkerThread implements Runnable  {
                 aStudent.setPreference(prefArray);
                 scheduler.assignFive(aStudent, coursepool);
                 ((StudentObjectPool)studentpool).returnObject(lineCount);
-                Thread currentThread = Thread.currentThread();			
+                //Thread currentThread = Thread.currentThread();			
             }
 		
 		}
@@ -94,11 +94,10 @@ public class WorkerThread implements Runnable  {
     }
 
     public synchronized void printStudentsSchedules() {
-        while(((StudentObjectPool)studentpool).getCurrentObjectNum() < ((StudentObjectPool)studentpool).capacity) {
+        while(((StudentObjectPool)studentpool).getCurrentObjectNum() < ((StudentObjectPool)studentpool).getCapacity()) {
             aStudent = ((StudentObjectPool)studentpool).loopObjects();
             int studentnum = ((StudentObjectPool)studentpool).getCurrentObjectNum();
             if(aStudent != null) {
-                //System.out.printf("Student %d  ", studentnum);
                 aStudent.printSchedule();
             }
         
